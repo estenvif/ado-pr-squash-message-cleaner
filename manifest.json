@@ -1,0 +1,23 @@
+{
+	"manifest_version": 3,
+	"name": "Azure DevOps PR Commit Cleaner",
+	"version": "1.0.0",
+	"description": "Removes the 'Merged PR #...' prefix from default commit messages when completing pull requests in Azure DevOps.",
+	"permissions": [],
+	"host_permissions": [
+		"https://dev.azure.com/*",
+		"https://*.visualstudio.com/*"
+	],
+	"content_scripts": [
+		{
+			"matches": [
+				"https://dev.azure.com/*/_git/*/pullRequest/*",
+				"https://*.visualstudio.com/*/_git/*/pullRequest/*"
+			],
+			"js": ["content.js"],
+			"run_at": "document_idle",
+			"all_frames": true,
+			"world": "MAIN"
+		}
+	]
+}
