@@ -125,6 +125,5 @@
 	patchPrototypes();
 	[0, 250, 800].forEach((ms) => setTimeout(run, ms));
 
-	window.__commitCleanerRun = run;
 	window.__prCommitClean = run;
 })();
