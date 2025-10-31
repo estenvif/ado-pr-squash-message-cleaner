@@ -11,6 +11,8 @@
 	"content_scripts": [
 		{
 			"matches": [
+				"https://dev.azure.com/*/_git/*/pullrequest/*",
+				"https://*.visualstudio.com/*/_git/*/pullrequest/*",
 				"https://dev.azure.com/*/_git/*/pullRequest/*",
 				"https://*.visualstudio.com/*/_git/*/pullRequest/*"
 			],
