@@ -5,6 +5,7 @@ Removes the automatic prefix `Merged PR #12345` from the default commit message 
 ## Files
 
 - `manifest.json` - Extension manifest (Chrome MV3)
+- `background.js` - MV3 service worker that re-injects `content.js` on SPA navigations
 - `content.js` - Content script that cleans the commit message
 
 ## Install (Unpacked)
@@ -26,9 +27,13 @@ const PREFIX_REGEX = /^(Merged\s+PR\s+#\d+\s*)/i;
 
 ## Notes
 
-- Uses a `MutationObserver` and a short-lived interval to catch dynamically inserted dialogs.
+- Uses `MutationObserver` plus scheduled attempts to handle dynamically inserted dialogs.
+- Azure DevOps is a SPA; navigation within the site may not refresh the page. `background.js` listens for `webNavigation.onCommitted` and `onHistoryStateUpdated` to inject `content.js` after in-app route changes.
+- A guard (`window.__commitCleanerLoaded`) prevents duplicate initialization after reinjection.
 
 ## Troubleshooting
 
-- If it does not trigger, open DevTools Console and run `window.__prCommitClean()` after the dialog appears.
-- Ensure the extension is active (icon visible or listed as enabled in the extensions page).
+- If cleaning does not trigger, open DevTools Console and run `window.__prCommitClean()`.
+- To force re-cleaning attempts inside an existing dialog run `window.__prCommitCleanerForce()`.
+- If the script seems absent after SPA navigation, toggle a merge strategy or open the Complete dialog and check `window.__commitCleanerLoaded` in DevTools (should be `true`). If `false`, the background injection may have failed; reload the tab.
+- Ensure the extension is active (listed as enabled in `chrome://extensions`).
