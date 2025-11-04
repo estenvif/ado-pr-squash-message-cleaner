@@ -14,8 +14,14 @@ Removes the automatic prefix `Merged PR #12345` from the default commit message 
 2. Enable **Developer mode** (toggle in top-right).
 3. Click **Load unpacked**.
 4. Select the folder `no-merged-pr-extension` containing these files.
-5. Navigate to an Azure DevOps pull request completion page (`Complete` dialog).
-6. The script will automatically remove the `Merged PR #...` prefix if present.
+
+## Usage
+
+1. Navigate to an Azure DevOps pull request completion page (`Complete` dialog).
+2. Ensure that squash commit is selected
+3. The script will then automatically
+  * check the `Customize merge commit message`
+  * remove the `Merged PR #...` prefix if present.
 
 ## Customization
 
